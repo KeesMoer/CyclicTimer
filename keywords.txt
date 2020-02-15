@@ -11,7 +11,7 @@
 # Methods and Functions (KEYWORD2)
 #######################################
 
-scheduleCyclic	KEYWORD2
+cyclicTimer	KEYWORD2
 setPeriod	KEYWORD2
 tickAndTest	KEYWORD2
 

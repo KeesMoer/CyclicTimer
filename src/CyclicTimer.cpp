@@ -28,20 +28,20 @@
 #include <Arduino.h>
 #include "CyclicTimer.h"
 
-scheduleCyclic::scheduleCyclic() {      // Constructor: initialise at zero
+cyclicTimer::cyclicTimer() {            // Constructor: initialise at zero
     period = lastTick = 0;
 }
 
-void scheduleCyclic::setPeriod(uint16_t newPeriod) {
+void cyclicTimer::setPeriod(uint16_t newPeriod) {
     period = newPeriod;                 // or this->period ?? Mainly style
     lastTick = millis();
 }
 
-void scheduleCyclic::reset(void) {
+void cyclicTimer::reset(void) {
     lastTick = millis();                // start from scratch
 }
 
-bool scheduleCyclic::tickAndTest(void) { // is next period passed?
+bool cyclicTimer::tickAndTest(void) {   // is next period passed?
     unsigned long now = millis();
     if(lastTick+period < lastTick) {    // we have a wrap-around...
       if(now >= lastTick) return false; // wait till millis() also wraps  

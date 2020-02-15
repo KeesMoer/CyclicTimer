@@ -27,7 +27,7 @@
 #ifndef CyclicTimer_h
 #define CyclicTimer_h
 
-class scheduleCyclic {
+class cyclicTimer {
   private:
     uint16_t period;                    // period in miliseconds
     unsigned long lastTick;             // last time stamp from millis()
@@ -36,7 +36,7 @@ class scheduleCyclic {
         /* 
          * Initialise a new timer (without setting the time)
          */
-    scheduleCyclic(void);
+    cyclicTimer(void);
     
         /* 
          * Set the timer period in ms and start running. Period max 65 seconds.
