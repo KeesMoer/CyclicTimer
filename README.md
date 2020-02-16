@@ -40,26 +40,44 @@ void cyclicTimer::reset(void)
 bool cyclicTimer::tickAndTest(void) 
 ```
 
-## Example
+## Example 1: CyclicBlink
 
-Within the main program loop, flash a LED every second (half second on,
-half second off):
+See example file Blink.ino; based on the standard Arduino blink example.
+Within the main program loop, flash a LED every second (one second on,
+one second off). The basic statements looks like:
 
 ```
 #include <CyclicTimer.h>
-cyclicTimer halfSecondTicker;  // Instantiate a new timer
+cyclicTimer oneSecondTicker;  // Instantiate a new timer
 
 // In init(): tick for half second period
-    halfSecondTicker.setPeriod(500);
+    oneSecondTicker.setPeriod(1000);
 
 // In loop(): check (decrement with auto-reload)
-    while(halfSecondTicker.tickAndTest()) { toggle_led(); }
+    while(oneSecondTicker.tickAndTest()) { toggle_led(); }
     do_other_tasks();
 ```
 
 You might expect an `if` before the test, but a while is useful if in the mean
 time already multiple periods have passed, so the timer can 'catch up'.
 I will do a second example with this (see the `examples` directory).
+
+## Example 2: CyclicBlinkPrint
+
+Two timer tasks implemented with CyclicTimer, one running at 10 Hz incrementing
+a counter, the 2nd one running at 1 Hz printing the counter value.
+  
+Also, in the main program, a variable delay represeting some random
+main task neeing a random amount of time (0..500 ms), after which it 
+will return to the main loop, giving time to the timer tasks.
+    
+As you can see, the 10 Hz task is still executed 10 times a second on
+average, although of course with **significant** jitter in the timing,
+as the main task only returneds and gives time for other tasks like
+`tenthSecondTimer` after up to 500 ms. However, no missed executions!
+
+Normally, you would make sure to break up your main task such that it
+will not take that long before returning to `loop()` ...
 
 
 ## Authors
