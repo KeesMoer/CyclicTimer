@@ -30,7 +30,7 @@
 class cyclicTimer {
   private:
     uint16_t period;                    // period in miliseconds
-    unsigned long lastTick;             // last time stamp from millis()
+    uint32_t lastTick;                  // last time stamp from millis()
 
   public:
         /* 
@@ -43,7 +43,7 @@ class cyclicTimer {
          * Params :
          * uint16_t	Timer period in ms
          */
-    void setPeriod(unsigned int newPeriod);
+    void setPeriod(uint16_t newPeriod);
     
         /* 
          * Resets the timer, useful for timeout counters etc

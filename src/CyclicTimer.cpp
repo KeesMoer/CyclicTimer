@@ -28,13 +28,17 @@
 #include <Arduino.h>
 #include "CyclicTimer.h"
 
+//  private:
+//    uint16_t period;                  // period in miliseconds
+//    uint32_t lastTick;                // last time stamp from millis()
+
 cyclicTimer::cyclicTimer() {            // Constructor: initialise at zero
     period = lastTick = 0;
 }
 
 void cyclicTimer::setPeriod(uint16_t newPeriod) {
     period = newPeriod;                 // or this->period ?? Mainly style
-    lastTick = millis();
+    lastTick = millis();                // and restart timer
 }
 
 void cyclicTimer::reset(void) {
@@ -42,11 +46,8 @@ void cyclicTimer::reset(void) {
 }
 
 bool cyclicTimer::tickAndTest(void) {   // is next period passed?
-    unsigned long now = millis();
-    if(lastTick+period < lastTick) {    // we have a wrap-around...
-      if(now >= lastTick) return false; // wait till millis() also wraps  
-    }
-    if(period && (now > lastTick+period)) {
+    uint32_t now = millis();            // millis since start, wrap at 49.7 days
+    if( (uint32_t)(now - lastTick) > (uint32_t)period) {
       lastTick += period;               // set value for next period
       return true;
     }
